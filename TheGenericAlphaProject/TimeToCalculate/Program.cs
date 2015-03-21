@@ -11,6 +11,7 @@ namespace TimeToCalculate
         public static void Main(string[] args)
         {
             //Program here
+            //local
         }
     }
 }
