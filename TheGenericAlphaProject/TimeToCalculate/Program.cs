@@ -12,6 +12,7 @@ namespace TimeToCalculate
         {
             //Program here
             //Git conflic visual studio test
+            //local
         }
     }
 }
