@@ -7,8 +7,8 @@
     <ProjectGuid>{F0C458BE-9E41-4DD5-8FEF-536EB2A83300}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JapanesePuzzleSolver</RootNamespace>
-    <AssemblyName>JapanesePuzzleSolver</AssemblyName>
+    <RootNamespace>TheJapanesePuzzleSolver</RootNamespace>
+    <AssemblyName>TheJapanesePuzzleSolver</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -3,42 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 
-namespace JapanesePuzzleSolver
+namespace TheJapanesePuzzleSolver
 {
     public class JapanesePuzzleSolver
     {
-        
+        public Grid Grid { get; set; }
+
+        public bool[][] Analyse()
+        {
+            var cells = new bool[Grid.Rows][];
+            for (int row = 0; row < Grid.Rows; row++)
+            {
+                cells[row] = Grid.AnalyzeRow(row);
+            }
+            return cells;
+
+        }
     }
 
     public class Grid
     {
-        private SortedList<int, Row> _rowValues;
-        private SortedList<int, Column> _columnValues;
-
-        public SortedList<int, Row> RowValues
+        public Grid(IEnumerable<IEnumerable<int>> columns, IEnumerable<IEnumerable<int>> rows)
         {
-            get
+            RowValues = new List<Row>();
+            ColumnValues = new List<Column>();
+
+            foreach (IEnumerable<int> column in columns)
             {
-                if (_rowValues == null)
-                {
-                    _rowValues = new SortedList<int, Row>();
-                }
-                return _rowValues;
+                ColumnValues.Add(new Column(column));
             }
+
+            foreach (IEnumerable<int> row in rows)
+            {
+                RowValues.Add(new Row(row));
+            }
+
+            Cells = new CellValue[Rows][];
+            for (int row = 0; row < Rows; row++)
+            {
+                Cells[row] = new CellValue[Columns];
+                for (int col = 0; col < Columns; col++)
+                {
+                    Cells[row][col] = new CellValue();
+                }
+            }
+            
         }
 
-        public SortedList<int, Column> ColumnValues
-        {
-            get
-            {
-                if (_columnValues == null)
-                {
-                    _columnValues = new SortedList<int, Column>();
-                }
-                return _columnValues;
-            }
-        }
+        public List<Row> RowValues { get; private set; }
+        public List<Column> ColumnValues { get; private set; }
+        public CellValue[][] Cells { get; private set; }
 
         public int Rows
         {
@@ -50,24 +66,78 @@ namespace JapanesePuzzleSolver
             get { return ColumnValues.Count; }
         }
 
-        public void AddRow(Row row)
+        public bool[] AnalyzeRow(int index)
         {
-            RowValues.Add(RowValues.Count + 0, row);
-        }
-
-        public void AddColumn(Column column)
-        {
-            ColumnValues.Add(RowValues.Count + 0, column);
+            var returnRow = new List<bool>();
+            var row = RowValues.ElementAt(index);
+            if (row.Values.Count == 1 && row.Values.First().Value == Columns)
+            {
+                for (int i = 0; i < Columns; i++)
+                {
+                    returnRow.Add(true);
+                }
+            }
+            return returnRow.ToArray();
         }
     }
 
     public class Row
     {
-        public SortedList<int, int> Values { get; set; }
+        public Row(IEnumerable<int> rowValues)
+        {
+            Values = new List<RowValue>();
+            foreach (var rowValue in rowValues)
+            {
+                Values.Add(new RowValue(Values.Count, rowValue));
+            }
+        }
+
+        public List<RowValue> Values { get; private set; }
+    }
+
+    public class RowValue
+    {
+        public RowValue(int order, int value)
+        {
+            Order = order;
+            Value = value;
+        }
+
+        public int Order { get; private set; }
+        public int Value { get; private set; }
     }
 
     public class Column
     {
-        public SortedList<int, int> Values { get; set; } 
+        public Column(IEnumerable<int> columnValues)
+        {
+            Values = new List<ColumnValue>();
+            foreach (var columnValue in columnValues)
+            {
+                Values.Add(new ColumnValue(Values.Count, columnValue));
+            }
+        }
+
+        public List<ColumnValue> Values { get; private set; }
+    }
+
+    public class ColumnValue
+    {
+        public ColumnValue(int order, int value)
+        {
+            Order = order;
+            Value = value;
+        }
+
+        public int Order { get; private set; }
+        public int Value { get; private set; }
+    }
+
+    public enum CellValue
+    {
+        Unknown,
+        Overlap,
+        FilledIn,
+        Empty,
     }
 }
