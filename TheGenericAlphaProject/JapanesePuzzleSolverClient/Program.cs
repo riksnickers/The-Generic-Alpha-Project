@@ -17,40 +17,51 @@ namespace JapanesePuzzleSolverClient
 
             List<List<int>> colList = new List<List<int>>
             {
-                new List<int>{5},
-                new List<int>{5},
-                new List<int>{5},
-                new List<int>{5},
-                new List<int>{5}
+                new List<int>{10},
+                new List<int>{10},
+                new List<int>{10},
+                new List<int>{10},
+                new List<int>{10},
+                new List<int>{10},
+                new List<int>{10},
+                new List<int>{10},
+                new List<int>{10},
+                new List<int>{10}
             };
             List<List<int>> rowList = new List<List<int>>
             {
-                new List<int>{5},
-                new List<int>{5},
-                new List<int>{5},
-                new List<int>{5},
-                new List<int>{5}
+                new List<int>{10},
+                new List<int>{7,2},
+                new List<int>{8,1},
+                new List<int>{1,1,1,1,2},
+                new List<int>{10}
             };
 
             jps.Grid = new Grid(colList, rowList);
 
-            var output = jps.Analyse();
+            var output = jps.AnalysePuzzle();
 
             for (int i = 0; i < output.Length; i++)
             {
                 for (int j = 0; j < output[i].Length; j++)
                 {
-                    WriteAt(i,j, output[i][j] ? 'X' : '-');
+                    WriteAt(i,j, output[i][j]);
                 }
             }
             
             Console.ReadLine();
         }
 
-        private static void WriteAt(int row, int col, char content)
+        private static void WriteAt(int row, int col, CellValue content)
         {
             Console.SetCursorPosition(col, row);
-            Console.Write(content);
+            switch (content)
+            {
+                case CellValue.Empty: Console.Write('E'); break;
+                case CellValue.FilledIn: Console.Write('X'); break;
+                case CellValue.Overlap: Console.Write('O'); break;
+                default: Console.Write('?'); break;
+            }
         }    
     }
 }
