@@ -9,7 +9,7 @@ namespace TheJapanesePuzzleSolver
 {
     public class JapanesePuzzleSolver
     {
-        public Grid Grid { get; set; }
+        public CellGrid CellGrid { get; set; }
 
         public List<IRule> Rules { get; set; }
 
@@ -17,21 +17,30 @@ namespace TheJapanesePuzzleSolver
         {
             Rules = new List<IRule>();
             Rules.Add(new FullRowRule());
+            Rules.Add(new FullColumnRule());
+            Rules.Add(new RowBorderRule());
+            Rules.Add(new ColumnBorderRule());
+            Rules.Add(new CheckCompletedRowRule());
+            Rules.Add(new CheckCompletedColumnRule());
 
-            foreach (IRule rule in Rules)
-            {
-                var ruleOutcome = rule.ApplyRule(Grid);
-                Grid.Cells = ruleOutcome;
-            }
-            return Grid.Cells;
+            //while (!CellGrid.Cells.IsSolved())
+            //{
+                foreach (IRule rule in Rules)
+                {
+                    var ruleOutcome = rule.ApplyRule(CellGrid);
+                    CellGrid.Cells = ruleOutcome;
+                }
+            //}
+
+            return CellGrid.Cells;
         }
 
         public bool[][] Analyse()
         {
-            var cells = new bool[Grid.RowCount][];
-            for (int row = 0; row < Grid.RowCount; row++)
+            var cells = new bool[CellGrid.RowCount][];
+            for (int row = 0; row < CellGrid.RowCount; row++)
             {
-                cells[row] = Grid.AnalyzeRow(row);
+                cells[row] = CellGrid.AnalyzeRow(row);
             }
             return cells;
         }

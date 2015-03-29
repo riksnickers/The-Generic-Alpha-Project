@@ -1,0 +1,63 @@
+﻿<Window x:Class="JapanesePuzzleSolverWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Automatic Japanese Puzzle Solver">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Grid.Row="1" BorderThickness="0 2 0 0" BorderBrush="Black">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderThickness="0 0 0 2" BorderBrush="Black">
+                    <Grid Name="RowHeaderGrid" >
+
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+
+
+        <Border Grid.Column="1" Grid.Row="0" BorderThickness="2 0 0 0" BorderBrush="Black">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" BorderThickness="0 0 2 0" BorderBrush="Black">
+                    <Grid Name="ColumnHeaderGrid" >
+
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="1" Grid.Row="1" BorderThickness="2 2 0 0" BorderBrush="Black">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Column="0" Grid.Row="0" BorderThickness="0 0 2 2" BorderBrush="Black">
+                    <Grid Name="CellsGrid">
+
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+       
+    </Grid>
+</Window>

@@ -1,38 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Configuration;
-using System.Text;
-using System.Threading.Tasks;
 using TheJapanesePuzzleSolver.Exceptions;
 
 namespace TheJapanesePuzzleSolver.Rules
 {
-    public class FullRowRule : IRule
+    public class FullColumnRule : IRule
     {
         private bool _ran = false;
+
         public CellValue[][] ApplyRule(CellGrid cellGrid)
         {
             if (_ran)
             {
                 return cellGrid.Cells;
             }
+
             var cells = cellGrid.Cells;
 
             //Iterate rows
-            for (int row = 0; row < cellGrid.RowCount; row++)
+            for (int col = 0; col < cellGrid.RowCount; col++)
             {
                 //Get a row
-                var rowHeader = cellGrid.RowHeaders.ElementAtOrDefault(row);
-                if (rowHeader != null)
+                var colHeader = cellGrid.ColumnHeaders.ElementAtOrDefault(col);
+                if (colHeader != null)
                 {
-                    if (rowHeader.HasSingleValue())
+                    if (colHeader.HasSingleValue())
                     {
                         //Single Value
-                        int rowHeaderValue = rowHeader.Values.First().Value;
+                        int rowHeaderValue = colHeader.Values.First().Value;
                         if (rowHeaderValue == cellGrid.ColumnCount)
                         {
-                            for (int col = 0; col < cellGrid.ColumnCount; col++)
+                            for (int row = 0; row < cellGrid.RowCount; row++)
                             {
                                 cells[row][col] = CellValue.FilledIn;
                             }
@@ -41,22 +38,22 @@ namespace TheJapanesePuzzleSolver.Rules
                     else
                     {
                         //Sum of the headers + the single gaps
-                        int totalFilledInCells = rowHeader.Values.Sum(rowValue => rowValue.Value);
-                        int miniumGaps = rowHeader.Values.Count - 1;
-                        if (totalFilledInCells + miniumGaps == cellGrid.ColumnCount)
+                        int totalFilledInCells = colHeader.Values.Sum(columnValue => columnValue.Value);
+                        int miniumGaps = colHeader.Values.Count - 1;
+                        if (totalFilledInCells + miniumGaps == cellGrid.RowCount)
                         {
-                            int col = 0;
-                            foreach (RowValue rowValue in rowHeader.Values)
+                            int row = 0;
+                            foreach (ColumnValue columnValue in colHeader.Values)
                             {
-                                for (int blockCounter = 0; blockCounter < rowValue.Value; blockCounter++)
+                                for (int blockCounter = 0; blockCounter < columnValue.Value; blockCounter++)
                                 {
                                     cells[row][col] = CellValue.FilledIn;
-                                    col++;
+                                    row++;
                                 }
-                                if (rowHeader.Values.IndexOf(rowValue) < rowHeader.Values.Count - 1)
+                                if (colHeader.Values.IndexOf(columnValue) < colHeader.Values.Count - 1)
                                 {
                                     cells[row][col] = CellValue.Empty;
-                                    col++;
+                                    row++;
                                 }
                             }
                         }

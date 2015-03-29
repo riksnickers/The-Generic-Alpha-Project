@@ -3,7 +3,9 @@ using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TheJapanesePuzzleSolver;
 
@@ -17,27 +19,32 @@ namespace JapanesePuzzleSolverClient
 
             List<List<int>> colList = new List<List<int>>
             {
-                new List<int>{10},
-                new List<int>{10},
-                new List<int>{10},
-                new List<int>{10},
-                new List<int>{10},
-                new List<int>{10},
-                new List<int>{10},
-                new List<int>{10},
-                new List<int>{10},
-                new List<int>{10}
+                new List<int>{3,6},
+                new List<int>{3,4},
+                new List<int>{3,4},
+                new List<int>{1},
+                new List<int>{1,1},
+                new List<int>{1,1},
+                new List<int>{1,1,1,3},
+                new List<int>{2,5},
+                new List<int>{2,3},
+                new List<int>{2,2}
             };
             List<List<int>> rowList = new List<List<int>>
             {
-                new List<int>{10},
-                new List<int>{7,2},
-                new List<int>{8,1},
-                new List<int>{1,1,1,1,2},
-                new List<int>{10}
+                new List<int>{3,3},
+                new List<int>{3,1,4},
+                new List<int>{3},
+                new List<int>{3},
+                new List<int>{1,1},
+                new List<int>{1,2,2},
+                new List<int>{3,3},
+                new List<int>{3,4},
+                new List<int>{2,3},
+                new List<int>{2,3}
             };
 
-            jps.Grid = new Grid(colList, rowList);
+            jps.CellGrid = new CellGrid(colList, rowList);
 
             var output = jps.AnalysePuzzle();
 
